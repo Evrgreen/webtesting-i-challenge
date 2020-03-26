@@ -6,7 +6,11 @@ module.exports = {
 };
 
 function succeed(item) {
-  return { ...item };
+  let enhancePlus = 0;
+  if (item.enhancement !== 20) {
+    enhancePlus = item.enhancement + 1;
+  }
+  return { ...item, enhancement: enhancePlus || item.enhancement };
 }
 
 function fail(item) {
@@ -14,9 +18,33 @@ function fail(item) {
 }
 
 function repair(item) {
-  return { ...item };
+  const newItem = validateRepair(item);
+  // console.log(newItem);
+  if (newItem.message) {
+    return newItem;
+  } else {
+    return { ...item, durability: 100 };
+  }
+}
+
+function validateRepair(item) {
+  if (
+    !item.name ||
+    !item.durability ||
+    (!item.enhancement && item.enhancement != 0)
+  ) {
+    return { message: `That isn't a repairable item`, item };
+  } else if (item.durability === 100) {
+    return { message: "This item doesn't need to be repaired", item };
+  } else {
+    return item;
+  }
 }
 
 function get(item) {
   return { ...item };
 }
+
+// console.log(repair({ durability: 50, name: 'iron' }));
+// console.log(succeed({ durability: 100, name: 'iron', enchancement: 0 }));
+// console.log(repair({ durability: 50, name: 'iron', enchancement: 0 }));
