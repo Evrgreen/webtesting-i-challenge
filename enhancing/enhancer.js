@@ -46,7 +46,11 @@ function validateRepair(item) {
 }
 
 function get(item) {
-  return { ...item };
+  let { name, enhancement } = item;
+  if (enhancement > 0) {
+    name = `[+${item.enhancement}]${item.name}`;
+  }
+  return { ...item, name };
 }
 
 // console.log(repair({ durability: 50, name: 'iron' }));

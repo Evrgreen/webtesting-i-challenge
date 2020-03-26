@@ -1,4 +1,4 @@
-const { repair, succeed, fail } = require('./enhancer.js');
+const { repair, succeed, fail, get } = require('./enhancer.js');
 // test away!
 describe('Repair function', () => {
   test('Should return a new item with 100 durability when original durability is less than 100', () => {
@@ -79,5 +79,29 @@ describe('Failure Function', () => {
     const failItem = fail(item);
     expect(failItem.durability).toBe(item.durability - 10);
     expect(failItem.enhancement).toBe(item.enhancement - 1);
+  });
+});
+
+describe('Get Function', () => {
+  test('if the enhancement level is 0, the the name is not modified', () => {
+    const item = { name: 'Iron Sword', enhancement: 0, durability: 90 };
+    const received = get(item);
+    expect(received.name).toBe(item.name);
+  });
+  test('if the enhancement level is above 1, modify name', () => {
+    const items = [
+      { name: 'Iron Sword', enhancement: 1, durability: 90 },
+      { name: 'Iron Sword', enhancement: 5, durability: 90 },
+      { name: 'Iron Sword', enhancement: 18, durability: 90 },
+      { name: 'Iron Sword', enhancement: 1, durability: 90 },
+      { name: 'Iron Sword', enhancement: 10, durability: 90 },
+    ];
+    console.log(items);
+    for (index in items) {
+      const item = items[index];
+      const received = get(item);
+      console.log(received, item);
+      expect(received.name).toBe(`[+${item.enhancement}]${item.name}`);
+    }
   });
 });

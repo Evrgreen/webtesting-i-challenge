@@ -4,11 +4,16 @@
   "description": "In this project, you will demonstrate proficiency by writing unit tests and production code to satisfy the _Minimum Viable Product_ described below.",
   "main": "index.js",
   "dependencies": {
-    "jest": "^25.2.0"
+    "@types/express": "^4.17.3",
+    "@types/nodemon": "^1.19.0",
+    "express": "^4.17.1",
+    "jest": "^25.2.0",
+    "nodemon": "^2.0.2"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "server": "nodemon"
   },
   "repository": {
     "type": "git",
