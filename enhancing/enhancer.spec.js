@@ -1,4 +1,4 @@
-const { repair, succeed } = require('./enhancer.js');
+const { repair, succeed, fail } = require('./enhancer.js');
 // test away!
 describe('Repair function', () => {
   test('Should return a new item with 100 durability when original durability is less than 100', () => {
@@ -61,4 +61,23 @@ test('Should not affect durability', () => {
     const enhanced = succeed(item);
     expect(enhanced.durability).toEqual(item.durability);
   }
+});
+
+describe('Failure Function', () => {
+  test("If the item's enhancement is less than 15, the durability of the item is decreased by 5", () => {
+    const item = { name: 'Iron Sword', enhancement: 10, durability: 100 };
+    const failItem = fail(item);
+    expect(failItem.durability).toBe(item.durability - 5);
+  });
+  test("If the item's enhancement is 15 or more, the durability of the item is decreased by 10", () => {
+    const item = { name: 'Iron Sword', enhancement: 15, durability: 100 };
+    const failItem = fail(item);
+    expect(failItem.durability).toBe(item.durability - 10);
+  });
+  test("If the item's enhancement is 16 or over, the durability of the item is decreased by 10 and enhancment decreased by 1", () => {
+    const item = { name: 'Iron Sword', enhancement: 19, durability: 100 };
+    const failItem = fail(item);
+    expect(failItem.durability).toBe(item.durability - 10);
+    expect(failItem.enhancement).toBe(item.enhancement - 1);
+  });
 });

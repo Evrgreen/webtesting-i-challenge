@@ -14,7 +14,11 @@ function succeed(item) {
 }
 
 function fail(item) {
-  return { ...item };
+  let { enhancement, durability } = item;
+  durability -= enhancement >= 15 ? 10 : 5;
+  enhancement = enhancement >= 16 ? enhancement - 1 : enhancement;
+  console.log(enhancement, durability);
+  return { ...item, durability, enhancement };
 }
 
 function repair(item) {
